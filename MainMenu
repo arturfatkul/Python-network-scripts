@@ -1,0 +1,37 @@
+class MainMenu:
+
+    def __init__(self):
+
+        self.main_menu_var = ''
+        self.current_password = ''
+        self.new_password = ''
+        self.confirm_new_password = ''
+        self.submenu_var = ''
+
+    def main_menu(self):
+
+        print("\nchoose radio device for password change\n")
+        print("1) canopy pmp100 cpe".upper())
+        print("2) wimax cpe".upper())
+        print("3) wimax lte cpe".upper())
+        print("4) quit\n")
+        self.main_menu_var = input("choose options 1 to 4 and press 'enter': \n")
+
+    def sub_menu1(self, user_data):
+
+        print("\n#############################################")
+        print("enter " + user_data[0] + " password for user " + user_data[1] + "\nenter new password for password change")
+        print("#############################################")
+        self.current_password = input(user_data[1] + " password: ")
+        self.new_password = input("new password: ")
+        self.confirm_new_password = input("confirm new password: ")
+
+    def sub_menu2(self, user_data):
+
+        print("\n#############################################")
+        print("1) change password one by one for " + user_data + " devices")
+        print("2) change password for five " + user_data +  " devices at once")
+        print("3) return to main menu")
+        print("#############################################")
+        self.submenu_var = input("choose options 1 to 3 and press 'enter': ")
+
