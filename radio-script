@@ -1,0 +1,235 @@
+import sys
+from datetime import datetime
+from MainMenu import *
+from IpAddr import *
+from CanopyCPE import *
+from WimaxCPE import *
+from WimaxLTECPE import *
+from winsound import Beep
+
+
+
+# HEADER #
+print(""" 
+    _ ____________________________________________ 
+   | | Prior to use the script fill the ip files | |
+   | | with the correct devices!                 | |
+   | | Each ip address must be input line be line| |
+   | |    01_canopy_pmp100_cpe.txt               | |
+   | |    02_wimax_cpe.txt                   *   | |
+   | |    03_wimax_lte_cpe.txt              _|   | |
+   | | You can check logs in the           (0)   | |
+   | |          results_device_name file!  |#|   | |
+   |_|____________________________________ '_'___|_|
+                """)
+
+
+
+menu = MainMenu()
+ip_list = IpAddr()
+
+# Return device name and user account
+def func_main_menu():
+
+    global menu
+    while True:
+        menu.main_menu()
+        if menu.main_menu_var == "1":
+            return ["canopy pmp100 cpe".upper(), "Serv"]
+        elif menu.main_menu_var == "2":
+            return ["wimax cpe".upper(), "admin"]
+        elif menu.main_menu_var == "3":
+            return ["wimax lte cpe".upper(), "admininistrator"]
+        elif menu.main_menu_var == "4":
+            return sys.exit()
+        else:
+            continue
+
+# Return list of passwords after validation
+def func_sub_menu1(user_data):
+
+    global menu
+    while True:
+        menu.sub_menu1(user_data)
+        if user_data[0] == "wimax lte cpe".upper() and len(menu.new_password) < 9:
+            print("\nPASSWORD LENGTH MUST BE 9 CHARACTERS OR MORE")
+            Beep(frequency, duration)
+            continue
+        elif menu.current_password == '':
+            print("\nPLEASE ENTER CURRENT PASSWORD!\n")
+            Beep(frequency, duration)
+            continue
+        elif menu.new_password == '' or len(menu.new_password) < 5:
+            print("\nPASSWORD LENGTH MUST BE 5 CHARACTERS OR MORE\n")
+            Beep(frequency, duration)
+            continue
+        elif menu.new_password != menu.confirm_new_password:
+            print("\nNEW PASSWORDS DOESN'T MATCH, PLEASE ENTER AGAIN\n")
+            Beep(frequency, duration)
+            continue
+        else:
+            return [menu.current_password, menu.new_password]
+
+
+# Return ip addresses in a list after validation in class IpAddr
+
+def func_ip_list(device_type):
+
+    global ip_list
+    if device_type == "canopy pmp100 cpe".upper():
+        return ip_list.canopy_pmp100_cpe()
+    elif device_type == "wimax cpe".upper():
+        return ip_list.wimax_cpe()
+    elif device_type == "wimax lte cpe".upper():
+        return  ip_list.wimax_lte_cpe()
+
+# Sub menu for login validation etc
+def func_check(ip, passwd, device_type):
+
+    check_status = None
+
+    while True:
+        continue_check_exit = input("\npress \"a\" and \"enter\" for validation\npress \"b\" and \"enter\" to continue\npress \"c\" and \"enter\" to return\n")
+        if continue_check_exit == "a":
+            if device_type == "canopy pmp100 cpe".upper():
+                check_status = CanopyCPE(ip, passwd).check_method()
+            elif device_type == "wimax cpe".upper():
+                check_status = WimaxCPE(ip, passwd).check_method()
+            elif device_type == "wimax lte cpe".upper():
+                check_status = WimaxLTECPE(ip, passwd).check_method()
+
+            if check_status == "Success":
+                    print("\nSUCCESSFUL LOGIN WITH NEW PASSWORD " + ip + " \n")
+                    Beep(frequency, duration)
+            else:
+                    print("\nLOGIN FAIL to " + ip)
+                    Beep(frequency, duration)
+        elif continue_check_exit == "b":
+            return True
+        elif continue_check_exit == "c":
+            return False
+
+# Sub menu for 2 types of password change
+def func_sub_menu2(device_type, ip, passwd):
+
+    global menu
+    x = 0
+
+    while True:
+        menu.sub_menu2(device_type)
+        if menu.submenu_var == "1" and device_type == "canopy pmp100 cpe".upper():
+            for i in ip:
+                results = CanopyCPE(i, passwd).change_method()
+                with open("10_results_canopy_pmp100_cpe.txt", "a") as file_canopy:
+                    file_canopy.write(str(datetime.now()) + ' - ' + i + " - " + results + '\n')
+                print('\n' + i + " - " + results + '\n')
+                sub_results = func_check(i, passwd, device_type)
+                if sub_results:
+                    continue
+                else:
+                    break
+
+        elif menu.submenu_var == "2" and device_type == "canopy pmp100 cpe".upper():
+            while True:
+                for i in ip:
+                    results = CanopyCPE(i, passwd).change_method()
+                    with open("10_results_canopy_pmp100_cpe.txt", "a") as file_canopy:
+                        file_canopy.write(str(datetime.now()) + ' - ' + i + " - " + results + '\n')
+                    x = x + 1
+                    print(i + " - " + results)
+                    if x%5 == 0:
+                        quit_enter = input("press 'b' and 'enter' to continue or 'c' and 'enter' to quit: ")
+                        if quit_enter == 'b':
+                            continue
+                        elif quit_enter == 'c':
+                            sys.exit()
+
+        elif menu.submenu_var == "1" and device_type == "wimax cpe".upper():
+            for i in ip:
+                results = WimaxCPE(i, passwd).change_method()
+                with open("11_results_wimax cpe.txt", "a") as file_wimax1:
+                    file_wimax1.write(str(datetime.now()) + ' - ' + i + " - " + results + '\n')
+                print('\n' + i + " - " + results + '\n')
+                sub_results = func_check(i, passwd, device_type)
+                if sub_results:
+                    continue
+                else:
+                    break
+
+        elif menu.submenu_var == "2" and device_type == "wimax cpe".upper():
+            while True:
+                for i in ip:
+                    results = WimaxCPE(i, passwd).change_method()
+                    with open("11_results_wimax cpe.txt", "a") as file_wimax1:
+                        file_wimax1.write(str(datetime.now()) + ' - ' + i + " - " + results + '\n')
+                    x = x + 1
+                    print(i + " - " + results)
+                    if x%5 == 0:
+                        quit_enter = input("press 'b' and 'enter' to continue or 'c' and 'enter' to quit: ")
+                        if quit_enter == 'b':
+                            continue
+                        elif quit_enter == 'c':
+                            sys.exit()
+
+        elif menu.submenu_var == "1" and device_type == "wimax lte cpe".upper():
+            for i in ip:
+                results = WimaxLTECPE(i, passwd).change_method()
+                with open("12_results_wimax lte cpe.txt", "a") as file_wimax2:
+                    file_wimax2.write(str(datetime.now()) + ' - ' + i + " - " + results + '\n')
+                print('\n' + i + " - " + results + '\n')
+                sub_results = func_check(i, passwd, device_type)
+                if sub_results:
+                    continue
+                else:
+                    break
+
+        elif menu.submenu_var == "2" and device_type == "wimax lte cpe".upper():
+            while True:
+                for i in ip:
+                    results = WimaxLTECPE(i, passwd).change_method()
+                    with open("12_results_wimax lte cpe.txt", "a") as file_wimax2:
+                        file_wimax2.write(str(datetime.now()) + ' - ' + i + " - " + results + '\n')
+                    x = x + 1
+                    print(i + " - " + results)
+                    if x % 5 == 0:
+                        quit_enter = input("press 'b' and 'enter' to continue or 'c' and 'enter' to quit: ")
+                        if quit_enter == 'b':
+                            continue
+                        elif quit_enter == 'c':
+                            sys.exit()
+
+        elif menu.submenu_var == "3":
+            break
+
+
+
+while True:
+    device_account = func_main_menu()
+    passwords = func_sub_menu1(device_account)
+    ip_address = func_ip_list(device_account[0])
+    func_sub_menu2(device_account[0], ip_address, passwords)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
