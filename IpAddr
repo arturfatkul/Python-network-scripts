@@ -1,0 +1,50 @@
+from ipaddress import ip_interface
+
+
+class IpAddr:
+
+    def __init__(self):
+
+        self.canopy_pmp100_cpe_list = []
+        self.wimax_cpe_list = []
+        self.wimax_lte_cpe_list = []
+
+    def canopy_pmp100_cpe(self):
+
+        with open("01_canopy_pmp100_cpe.txt", "r") as file_canopy:
+            for ip in file_canopy.readlines():
+                try:
+                    ip_interface(ip.strip()).ip
+                except:
+                    print("\nWRONG IPV4 ADDRESS OR BLANK LINE - " + ip)
+                    print("PLEASE CORRECT THE FILE AND TRY AGAIN!\n")
+                    quit()
+                self.canopy_pmp100_cpe_list.append("http://" + ip.strip())
+            return self.canopy_pmp100_cpe_list
+
+
+    def wimax_cpe(self):
+
+        with open("02_wimax_cpe.txt", "r") as file_wimax1:
+            for ip in file_wimax1.readlines():
+                try:
+                    ip_interface(ip.strip()).ip
+                except:
+                    print("\nWRONG IPV4 ADDRESS OR BLANK LINE - " + ip)
+                    print("PLEASE CORRECT THE FILE AND TRY AGAIN!\n")
+                    quit()
+                self.wimax_cpe_list.append("http://" + ip.strip())
+            return self.wimax_cpe_list
+
+    def wimax_lte_cpe(self):
+
+        with open("03_wimax_lte_cpe.txt", "r") as file_wimax2:
+            for ip in file_wimax2.readlines():
+                try:
+                    ip_interface(ip.strip()).ip
+                except:
+                    print("\nWRONG IPV4 ADDRESS OR BLANK LINE - " + ip)
+                    print("PLEASE CORRECT THE FILE AND TRY AGAIN!\n")
+                    quit()
+                self.wimax_lte_cpe_list.append("https://" + ip.strip())
+            return self.wimax_lte_cpe_list
