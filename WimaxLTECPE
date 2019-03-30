@@ -1,0 +1,59 @@
+from selenium import webdriver
+import os
+import time
+
+class WimaxLTECPE():
+
+    def __init__(self, ip, passwords):
+
+        self.passwords = passwords
+        self.ip = ip
+
+    def change_method(self):
+        try:
+            driverLocation = "C:\PyWebAuto\chromedriver.exe"
+            os.environ["webdriver.chrome.driver"] = driverLocation
+            driver = webdriver.Chrome(driverLocation)
+            driver.maximize_window()
+            driver.get(str(self.ip))
+            driver.implicitly_wait(2)
+            driver.find_element_by_id('user_name').send_keys('administrator')
+            driver.find_element_by_id('user_passwd').send_keys(self.passwords[0])
+            driver.find_element_by_id('btnLOGIN').click()
+            driver.find_element_by_xpath("//div[@class='m']//p[text()='Management']").click()
+            driver.implicitly_wait(2)
+            driver.switch_to.frame(driver.find_element_by_xpath("//*[@id='main_frame']"))
+            time.sleep(0.5)
+            driver.find_element_by_id('superuser_old_pw').send_keys(self.passwords[0])
+            time.sleep(0.5)
+            driver.find_element_by_id('superuser_pw').send_keys(self.passwords[1])
+            time.sleep(0.5)
+            driver.find_element_by_id('superuser_confirm_pw').send_keys(self.passwords[1])
+            time.sleep(0.5)
+            driver.find_element_by_id('submit_btn').click()
+            time.sleep(0.5)
+            driver.quit()
+            return "Success"
+        except:
+            return "Failure (check administrator password or check device)"
+
+
+
+    def check_method(self):
+        try:
+            driverLocation = "C:\PyWebAuto\chromedriver.exe"
+            os.environ["webdriver.chrome.driver"] = driverLocation
+            driver = webdriver.Chrome(driverLocation)
+            driver.maximize_window()
+            driver.get(str(self.ip))
+            driver.implicitly_wait(2)
+            driver.find_element_by_id('user_name').send_keys('administrator')
+            driver.find_element_by_id('user_passwd').send_keys(self.passwords[1])
+            driver.find_element_by_id('btnLOGIN').click()
+            driver.find_element_by_id('managementColumn')
+            time.sleep(2)
+            driver.quit()
+            return "Success"
+        except:
+            return "Failure"
+
