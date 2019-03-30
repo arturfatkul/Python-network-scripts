@@ -5,10 +5,11 @@ from IpAddr import *
 from CanopyCPE import *
 from WimaxCPE import *
 from WimaxLTECPE import *
+from winsound import Beep
 
 
 
-# HEADER #
+# HEADER 
 print(""" 
     _ ____________________________________________ 
    | | Prior to use the script fill the ip files | |
@@ -21,6 +22,8 @@ print("""
    | |          results_device_name file!  |#|   | |
    |_|____________________________________ '_'___|_|
                 """)
+frequency = 800 
+duration = 80  
 
 
 
