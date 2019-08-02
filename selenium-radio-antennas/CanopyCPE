@@ -1,0 +1,53 @@
+from selenium import webdriver
+import os
+import re
+import time
+
+class CanopyCPE():
+
+
+    def __init__(self, ip, passwords):
+
+        self.passwords = passwords
+        self.ip = ip
+
+    def change_method(self):
+        try:
+            driverLocation = "C:\PyWebAuto\chromedriver.exe"
+            os.environ["webdriver.chrome.driver"] = driverLocation
+            driver = webdriver.Chrome(driverLocation)
+            driver.maximize_window()
+            driver.get(str(self.ip))
+            driver.find_element_by_id('CanopyUsername').send_keys("Serv")
+            driver.find_element_by_id('CanopyPassword').send_keys(self.passwords[0])
+            driver.find_element_by_id('loginbutton').click()
+            driver.find_element_by_link_text('Accounts').click()
+            driver.find_element_by_link_text('Change User Password').click()
+            driver.find_element_by_id('UserPasswd1').send_keys(self.passwords[1])
+            driver.find_element_by_id('UserPasswd2').send_keys(self.passwords[1])
+            driver.find_element_by_id('UpdateUser').click()
+            results = driver.find_element_by_id('UserMessage').text
+        except:
+            return "Failure (check Serv password or check device)"
+        if re.match('Password Change successful*', results):
+            driver.quit()
+            return "Success"
+        else:
+            return "Failure"
+
+    def check_method(self):
+        try:
+            driverLocation = "C:\PyWebAuto\chromedriver.exe"
+            os.environ["webdriver.chrome.driver"] = driverLocation
+            driver = webdriver.Chrome(driverLocation)
+            driver.maximize_window()
+            driver.get(self.ip)
+            driver.find_element_by_id('CanopyUsername').send_keys("Serv")
+            driver.find_element_by_id('CanopyPassword').send_keys(self.passwords[1])
+            driver.find_element_by_id('loginbutton').click()
+            driver.find_element_by_id('menuselect')
+            time.sleep(2)
+            driver.quit()
+            return "Success"
+        except:
+            return "Failure"
