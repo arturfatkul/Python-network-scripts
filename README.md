@@ -1,2 +1,2 @@
-# webautomation-4radio-antennas
-Web interface password change on Radio antennas with selenium
+Password change on Radio antennas web interface using Python Selenium web automation framework
+
