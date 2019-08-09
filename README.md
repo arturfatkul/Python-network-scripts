@@ -1,6 +1,6 @@
 ######  <h2> Web UI Automation for password changes
  
-This console-based script helped to automate quarter-yearly compliance task for password changes on hundreds of radio antennas. When option for that specific task is missing through the SNMP like in my case, web automation is a great choice.
+This console-based script helped to automate quarter-yearly compliance task for password changes on hundreds of radio antennas. <p>When option for that specific task is missing through the SNMP like in my case, web automation is a great choice.</p>
 
 ######  <h2> Dependencies
 
