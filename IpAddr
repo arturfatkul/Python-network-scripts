@@ -1,3 +1,5 @@
+```python
+
 from ipaddress import ip_interface
 
 
@@ -48,3 +50,4 @@ class IpAddr:
                     quit()
                 self.wimax_lte_cpe_list.append("https://" + ip.strip())
             return self.wimax_lte_cpe_list
+```
