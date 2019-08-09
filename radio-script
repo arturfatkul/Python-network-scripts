@@ -212,28 +212,3 @@ while True:
     passwords = func_sub_menu1(device_account)
     ip_address = func_ip_list(device_account[0])
     func_sub_menu2(device_account[0], ip_address, passwords)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
