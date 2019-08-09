@@ -1,6 +1,6 @@
 ######  <h2> Automation with Selenium Web Framework
  
-This script helped to automate quarter-yearly compliance task for password change on hundreds of radio antennas.
+This console-based script helped to automate quarter-yearly compliance task for password change on hundreds of radio antennas.
 
 Option for password change through the SNMP was missing, that's why web automation was the only choice.
 
