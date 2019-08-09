@@ -4,7 +4,8 @@ This console-based script helped to automate quarter-yearly compliance task for 
 
 ######  <h2> Dependencies
 
-Python3, Selenium Webdriver
+* Python3
+* Selenium Webdriver
 
 ######  <h2> Usage
 
