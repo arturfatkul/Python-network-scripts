@@ -6,7 +6,11 @@ This console-based script helped to automate quarter-yearly compliance task for 
 
 Python3, Selenium Webdriver
 
-<h4><a href="https://arturfatkul.github.io/webautomation-4radio-antennas/">Сlick on this link to watch the video</a></h4>
+######  <h2> Usage
 
 <img src="files/radio.JPG">
+
+<h4><a href="https://arturfatkul.github.io/webautomation-4radio-antennas/">Сlick on this link to watch the video</a></h4>
+
+
 
