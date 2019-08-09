@@ -1,4 +1,4 @@
-######  <h1> Automation with Selenium Web Framework
+######  <h2> Automation with Selenium Web Framework
  
 This script helped to automate quarter-yearly compliance task for password change on hundreds of radio antennas.
 
