@@ -206,6 +206,7 @@ def func_sub_menu2(device_type, ip, passwd):
             break
 
 
+if __name__ == "__main__":
 
 while True:
     device_account = func_main_menu()
